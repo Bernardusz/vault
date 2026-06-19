@@ -26,26 +26,15 @@ public class UserRepository {
       .optional();
   }
 
-  public Optional<UserPublicInfo> findByUsername(String username) {
+  public Optional<UserPublicInfo> findById(Long userId) {
     return jdbcClient.sql(
       """
       SELECT id, username, email
       FROM users
-      WHERE username = :username
+      WHERE id = :userId
       """
-    ).param("username", username)
-      .query(UserPublicInfo.class)
-      .optional();
-  }
-
-  public Optional<UserPublicInfo> findById(Long id) {
-    return jdbcClient.sql(
-      """
-      SELECT id, username, email
-      FROM users
-      WHERE id = :id
-      """
-    ).param("id", id)
+    )
+      .param("userId", userId)
       .query(UserPublicInfo.class)
       .optional();
   }
@@ -65,38 +54,39 @@ public class UserRepository {
       .optional();
   }
 
-  public void updateUserInformation(Long id, UserInformationUpdate userData){
+  public void updateUserInformation(Long userId ,UserInformationUpdate userData){
     jdbcClient.sql(
       """
       UPDATE users SET
       username = :username,
       email = :email
-      WHERE id = :id
+      WHERE id = :userId
       """
     ).param("username", userData.username())
       .param("email", userData.email())
-      .param("id", id)
+      .param("userId", userId)
       .update();
   }
 
-  public void updateUserPassword(Long id, UserPasswordUpdate userPassword){
+  public void updateUserPassword(Long userId ,UserPasswordUpdate userPassword){
     jdbcClient.sql(
       """
       UPDATE users SET
       password = :password
-      WHERE id = :id
+      WHERE id = :userId
       """
     ).param("password", userPassword.password())
-      .param("id", id)
+      .param("userId", userId)
       .update();
   }
 
-  public void delete(Long id){
+  public void delete(Long userId){
     jdbcClient.sql(
       """
-      DELETE FROM users WHERE id = :id
+      DELETE FROM users WHERE id = :userId
       """
-    ).param("id", id)
+    )
+      .param("userId", userId)
       .update();
   }
 
