@@ -1,4 +1,5 @@
 package io.github.bernardusz.vault.credential.dto;
 
-public record CredentialUpdatePassword() {
-}
+public record CredentialUpdatePassword(
+  String password
+) { }

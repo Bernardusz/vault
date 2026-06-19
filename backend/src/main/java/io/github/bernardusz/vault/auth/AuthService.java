@@ -2,7 +2,7 @@ package io.github.bernardusz.vault.auth;
 
 import io.github.bernardusz.vault.auth.dto.LoginRequest;
 import io.github.bernardusz.vault.auth.dto.LoginResponse;
-import io.github.bernardusz.vault.exception.custom.UserAlreadyExists;
+import io.github.bernardusz.vault.exception.custom.UserAlreadyExistsException;
 import io.github.bernardusz.vault.user.User;
 import io.github.bernardusz.vault.user.UserRepository;
 import io.github.bernardusz.vault.user.dto.UserCreation;
@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthService {
@@ -26,14 +27,16 @@ public class AuthService {
     this.jwtService = jwtService;
   }
 
+  @Transactional
   public void registerUser(UserCreation userCreation) {
     if (userRepository.existsByUsername(userCreation.username())){
-      throw new UserAlreadyExists("User already exists");
+      throw new UserAlreadyExistsException("User already exists");
     }
     String hashedPassword = passwordEncoder.encode(userCreation.password());
     userRepository.create(new UserCreation(userCreation.username(), hashedPassword, userCreation.email()));
   }
 
+  @Transactional(readOnly = true)
   public LoginResponse loginUser(LoginRequest loginRequest){
     authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(
