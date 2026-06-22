@@ -1,9 +1,6 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "ignoreDeprecations": "6.0",
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -13,16 +10,63 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": ["ES2022", "dom"],
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "useDefineForClassFields": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+	  "@/*": ["./src/*"],
+      "@spartan-ng/helm/alert": [
+        "./src/app/components/ui/alert/src/index.ts"
+      ],
+      "@spartan-ng/helm/autocomplete": [
+        "./src/app/components/ui/autocomplete/src/index.ts"
+      ],
+      "@spartan-ng/helm/button": [
+        "./src/app/components/ui/button/src/index.ts"
+      ],
+      "@spartan-ng/helm/card": [
+        "./src/app/components/ui/card/src/index.ts"
+      ],
+      "@spartan-ng/helm/hover-card": [
+        "./src/app/components/ui/hover-card/src/index.ts"
+      ],
+      "@spartan-ng/helm/input": [
+        "./src/app/components/ui/input/src/index.ts"
+      ],
+      "@spartan-ng/helm/separator": [
+        "./src/app/components/ui/separator/src/index.ts"
+      ],
+      "@spartan-ng/helm/textarea": [
+        "./src/app/components/ui/textarea/src/index.ts"
+      ],
+      "@spartan-ng/helm/utils": [
+        "./src/app/components/ui/utils/src/index.ts"
+      ],
+      "@spartan-ng/helm/icon": [
+        "./src/app/components/ui/icon/src/index.ts"
+      ],
+      "@spartan-ng/helm/popover": [
+        "./src/app/components/ui/popover/src/index.ts"
+      ],
+      "@spartan-ng/helm/input-group": [
+        "./src/app/components/ui/input-group/src/index.ts"
+      ],
+      "@spartan-ng/helm/field": [
+        "./src/app/components/ui/field/src/index.ts"
+      ],
+      "@spartan-ng/helm/label": [
+        "./src/app/components/ui/label/src/index.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

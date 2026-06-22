@@ -9,16 +9,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserDetailService implements UserDetailsService {
-  private final UserRepository userRepository;
 
-  public  UserDetailService(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
+	private final UserRepository userRepository;
 
-  @Override
-  @Transactional(readOnly = true)
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-    return userRepository.findSecurityUserByUsername(username)
-      .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-  }
+	public UserDetailService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	@Transactional(readOnly = true)
+	public UserDetails loadUserById(String userIdStr)
+		throws UsernameNotFoundException {
+		return userRepository
+			.findSecurityById(Long.parseLong(userIdStr))
+			.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public UserDetails loadUserByUsername(String username)
+		throws UsernameNotFoundException {
+		return userRepository
+			.findSecurityByUsername(username)
+			.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+	}
 }
