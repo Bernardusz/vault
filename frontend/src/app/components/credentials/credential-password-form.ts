@@ -1,16 +1,21 @@
 import { HlmCardImports } from "@/app/components/ui/card/src";
+import {
+	UserCreation,
+	UserInformationUpdate,
+	UserPublicInformation,
+} from "@/app/types/user-type";
 import { Component, input, output } from "@angular/core";
 import { RouterLink } from "@angular/router";
 
 @Component({
 	standalone: true,
-	selector: "user-password-form",
+	selector: "credential-password-form",
 	imports: [HlmCardImports, RouterLink],
 	template: `
 		<hlm-card size="default" class="min-w-96 w-full">
 			<hlm-card-header>
 				<h2 hlmCardTitle>Password</h2>
-				<p hlmCardDescription>Update your password today!</p>
+				<p hlmCardDescription>Update your stored password!</p>
 			</hlm-card-header>
 			<div hlmCardContent>
 				<form
@@ -53,7 +58,7 @@ import { RouterLink } from "@angular/router";
 		</hlm-card>
 	`,
 })
-export default class UserPasswordForm {
+export default class CredentialPasswordForm {
 	submit = output<string>();
 	isSubmitting = input.required<boolean>();
 

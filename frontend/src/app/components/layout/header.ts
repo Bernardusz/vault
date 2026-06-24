@@ -8,7 +8,9 @@ import { Router, RouterLink } from "@angular/router";
 	imports: [RouterLink],
 	template: `
 		<header class="p-4 flex flex-row justify-between">
-			<h1>Vault</h1>
+			<a routerLink="/">
+				<h1>Vault</h1>
+			</a>
 
 			<div class="flex flex-row gap-4 items-center justify-center">
 				<a [routerLink]="['/users', id()]" class="text-foreground">
@@ -24,9 +26,13 @@ import { Router, RouterLink } from "@angular/router";
 		</header>
 	`,
 })
-export default class Header {
+export default class Header implements OnInit {
 	private authService = inject(AuthService);
 	private router = inject(Router);
+
+	ngOnInit(): void {
+		this.authService.checkIfUserIsLogged().subscribe();
+	}
 
 	nickname = computed(() => {
 		return this.authService.currentUser()?.username;

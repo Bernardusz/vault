@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS users(
 
 CREATE TABLE IF NOT EXISTS credentials(
     id SERIAL PRIMARY KEY,
-    user_id SERIAL REFERENCES users(id) NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     service_name VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,

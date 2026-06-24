@@ -1,1 +1,33 @@
-<h1>Hello</h1>
+<main class="page">
+	<section class="section flex flex-col justify-center items-center">
+		<div class="search-container mb-6 w-full max-w-md">
+			<input
+				type="text"
+				placeholder="🔍 Search services, usernames, or descriptions..."
+				(input)="onSearchChange($event)"
+				class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+			/>
+		</div>
+		<a
+			routerLink="/credentials/create"
+			class="bg-primary z-50 absolute top-8 right-2 text-background btn-primary p-2 text-center rounded-2xl"
+		>
+			Create
+		</a>
+		@if (data()) {
+		<div
+			class="w-full grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-4 p-4"
+		>
+			@for (credential of data(); track credential.id) {
+			<credential-card class="w-full" [credential]="credential" />
+			} @empty {
+			<a routerLink="/credentials/create">
+				<p>Create a new credentials!</p>
+			</a>
+			}
+		</div>
+		} @else {
+		<p>Loading your secure vault... 🔒</p>
+		}
+	</section>
+</main>

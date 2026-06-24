@@ -6,8 +6,6 @@ import io.github.bernardusz.vault.user.UserService;
 import io.github.bernardusz.vault.user.dto.UserCreation;
 import io.github.bernardusz.vault.user.dto.UserPublicInfo;
 import jakarta.servlet.http.HttpServletResponse;
-import java.net.Authenticator;
-import java.net.URI;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -37,7 +35,7 @@ public class AuthController {
 		String username =
 			authentication == null ? "anonymousUser" : authentication.getName();
 
-		return (authentication == null || "anonymousUser".equals(username))
+		return authentication == null || "anonymousUser".equals(username)
 			? ResponseEntity.ok().build()
 			: ResponseEntity.ok(userService.findDetailByUsername(username));
 	}

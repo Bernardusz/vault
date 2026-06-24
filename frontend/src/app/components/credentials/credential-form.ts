@@ -1,5 +1,10 @@
 import { HlmCardImports } from "@/app/components/ui/card/src";
 import {
+	CredentialSummary,
+	CredentialUpdateInformation,
+} from "@/app/types/credential-type";
+import {
+	UserCreation,
 	UserInformationUpdate,
 	UserPublicInformation,
 } from "@/app/types/user-type";
@@ -8,14 +13,14 @@ import { RouterLink } from "@angular/router";
 
 @Component({
 	standalone: true,
-	selector: "user-form",
-	imports: [HlmCardImports, RouterLink],
+	selector: "credential-form",
+	imports: [HlmCardImports],
 	template: `
 		<hlm-card size="default" class="min-w-96 w-full">
 			<hlm-card-header>
-				<h2 hlmCardTitle>Information</h2>
+				<h2 hlmCardTitle>Edit the information</h2>
 				<p hlmCardDescription>
-					Update the public information of your profile!
+					Edit public information of your stored credential!
 				</p>
 			</hlm-card-header>
 			<div hlmCardContent>
@@ -24,9 +29,19 @@ import { RouterLink } from "@angular/router";
 					class="flex flex-col gap-4"
 				>
 					<div class="flex flex-col gap-2">
+						<label for="service-name">Service Name</label>
+						<input
+							[value]="credentialData().serviceName"
+							type="service-name"
+							id="service-name"
+							name="service-name"
+							required
+						/>
+					</div>
+					<div class="flex flex-col gap-2">
 						<label for="username">Username</label>
 						<input
-							[value]="userData().username"
+							[value]="credentialData().username"
 							type="text"
 							id="username"
 							name="username"
@@ -34,14 +49,14 @@ import { RouterLink } from "@angular/router";
 						/>
 					</div>
 					<div class="flex flex-col gap-2">
-						<label for="email">Email</label>
-						<input
-							[value]="userData().email"
-							type="email"
-							id="email"
-							name="email"
+						<label for="description">Description</label>
+						<textarea
+							[value]="credentialData().description"
+							type="description"
+							id="description"
+							name="description"
 							required
-						/>
+						></textarea>
 					</div>
 					<button
 						class="bg-primary rounded-2xl btn-primary p-2 text-center text-background"
@@ -53,32 +68,32 @@ import { RouterLink } from "@angular/router";
 				</form>
 			</div>
 			<hlm-card-footer>
-				<p class="text-center w-full">
-					Already Signed up? <a routerLink="/login">Log in</a>
-				</p>
+				<p>May your account stay safe! 🐧</p>
 			</hlm-card-footer>
 		</hlm-card>
 	`,
 })
-export default class UserForm {
-	submit = output<UserInformationUpdate>();
+export default class CredentialForm {
+	submit = output<CredentialUpdateInformation>();
 	isSubmitting = input.required<boolean>();
-	userData = input.required<UserPublicInformation>();
+	credentialData = input.required<CredentialSummary>();
 
 	async handleSubmit(event: Event) {
 		event.preventDefault();
 
 		const formData = new FormData(event.target as HTMLFormElement);
+		const serviceName = formData.get("service-name");
 		const username = formData.get("username");
-		const email = formData.get("email");
+		const description = formData.get("description");
 
-		if (!username || !email) {
+		if (!serviceName || !username || !description) {
 			return;
 		}
 
 		this.submit.emit({
+			serviceName: serviceName as string,
 			username: username as string,
-			email: email as string,
+			description: description as string,
 		});
 	}
 }

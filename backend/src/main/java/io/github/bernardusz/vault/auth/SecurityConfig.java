@@ -91,6 +91,8 @@ public class SecurityConfig {
 		);
 		configuration.setAllowCredentials(true); // Crucial for HttpOnly Cookie transfers
 
+		configuration.setExposedHeaders(List.of("Location"));
+
 		UrlBasedCorsConfigurationSource source =
 			new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);

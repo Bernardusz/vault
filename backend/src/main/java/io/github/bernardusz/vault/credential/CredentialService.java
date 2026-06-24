@@ -55,8 +55,8 @@ public class CredentialService {
 					credentialDetail.id(),
 					credentialDetail.serviceName(),
 					credentialDetail.username(),
-					decryptedPassword,
-					credentialDetail.description()
+					credentialDetail.description(),
+					decryptedPassword
 				);
 			})
 			.orElseThrow(() ->
