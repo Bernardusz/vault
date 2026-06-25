@@ -24,7 +24,7 @@ Learn how to build dynamic queries with JdbcClient without the help of an ORM an
 6. And then it execute the SecurityFilterChain inside your SecurityConfig.
 7. And inside that SecurityFilterChain you can register your own Filter or middleware.
 8. Spring Boot doesn't have a custom JWT starter, either you do session based or you do OAuth 2.0 with third party provider
-9. Password encryptor is always deterministic. Even if you 12346 turns into a massive long string, every instances of 123456 will always be that long string. This is a vunerability known as The Rainbow Table. That's where Salting is added on top of Hashing.
+9. Password hashing is always deterministic. Even if you 12346 turns into a massive long string, every instances of 123456 will always be that long string. This is a vunerability known as The Rainbow Table. That's where Salting is added on top of Hashing.
 10. Encryption is different that Hashing. In my app Hashing is used for User password. Because hashing is always deterministic, you can hash it before storing it to DB and check whether user input turned into long unintelligible string is the same in the DB
 11. Encryption can be Decrypted to return to its original value. Proven in TLS and SSL
 12. The reason JWT and Encryption need a secret key is because of safety. When a hacker or malicious user tampers with the data, the signature will break. This secret key is used alongside your user id and a specific moving data (issued at, and JWT Id, etc) to make sure every JWT token is unique
